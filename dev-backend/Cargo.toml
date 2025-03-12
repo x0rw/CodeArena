@@ -1,0 +1,8 @@
+[package]
+name = "leetcode-clone-backend"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+sqlx = {version="0.8.3"}
+
