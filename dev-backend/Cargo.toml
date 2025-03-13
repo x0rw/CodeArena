@@ -1,8 +1,15 @@
 [package]
-name = "leetcode-clone-backend"
+name = "dev-backend"
 version = "0.1.0"
 edition = "2021"
 
 [dependencies]
 sqlx = {version="0.8.3"}
+tokio = {version="1"}
+actix-web = "4.0"
+actix-rt = "2.5"
+serde = "1"
+serde_json = "1.0"
+uuid = {version = "1", features = ["v4"]}
+dotenv = "0.15"
 
