@@ -6,4 +6,4 @@ A fast, scalable platform for solving coding challenges with multi-language supp
 - Rust, NodeJs dependencies
 - 
 ## ER Model
-- ![ER Diagram](docs/ERR_modele.png)
+![ER Diagram](docs/ERR_modele.png)
