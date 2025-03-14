@@ -3,9 +3,9 @@ use uuid::uuid;
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Problem {
-    pub problem_id: u32,
+    pub problem_id: i32,
     pub title: String,
     pub body: String,
-    pub rating: String,
+    pub difficulty: String,
     pub tags: String,
 }
