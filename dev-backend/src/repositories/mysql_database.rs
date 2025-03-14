@@ -18,8 +18,23 @@ impl MySqlDatabase {
     }
 }
 impl Database for MySqlDatabase {
-    async fn get_problems(&self, limit: u32) -> Problem {
-        let q = sqlx::query!(" SELECT * FROM Problem where idProblem = 1")
+    async fn get_problems(&self, limit: u32) -> Vec<Problem> {
+        let q = sqlx::query!(" SELECT * FROM Problem LIMIT ? ", limit)
+            .map(|x| Problem {
+                problem_id: x.idProblem,
+                body: x.body.unwrap(),
+                tags: x.tags.unwrap(),
+                difficulty: x.difficulty.unwrap(),
+                title: x.title.unwrap(),
+            })
+            .fetch_all(&self.pool)
+            .await
+            .unwrap();
+        return q;
+    }
+
+    async fn get_problem(&self, problem_id: u32) -> Problem {
+        let q = sqlx::query!(" SELECT * FROM Problem where idProblem=?", problem_id)
             .map(|x| Problem {
                 problem_id: x.idProblem,
                 body: x.body.unwrap(),
@@ -31,10 +46,6 @@ impl Database for MySqlDatabase {
             .await
             .unwrap();
         return q;
-    }
-
-    async fn get_problem(&self, problem_id: u32) {
-        todo!()
     }
 
     async fn add_problem(&self, problem_title: String, problem_body: String, difficulty: String) {
