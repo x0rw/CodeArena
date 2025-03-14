@@ -1,4 +1,4 @@
-use std::sync::Arc;
+use std::{io, sync::Arc};
 
 use crate::{database::Database, models::problem::Problem};
 use sqlx::{mysql::MySqlPool, Error, Result};
@@ -21,7 +21,7 @@ impl Database for MySqlDatabase {
     async fn get_problems(&self, limit: u32) -> Vec<Problem> {
         let q = sqlx::query!(" SELECT * FROM Problem LIMIT ? ", limit)
             .map(|x| Problem {
-                problem_id: x.idProblem,
+                problem_id: Some(x.idProblem),
                 body: x.body.unwrap(),
                 tags: x.tags.unwrap(),
                 difficulty: x.difficulty.unwrap(),
@@ -36,7 +36,7 @@ impl Database for MySqlDatabase {
     async fn get_problem(&self, problem_id: u32) -> Problem {
         let q = sqlx::query!(" SELECT * FROM Problem where idProblem=?", problem_id)
             .map(|x| Problem {
-                problem_id: x.idProblem,
+                problem_id: Some(x.idProblem),
                 body: x.body.unwrap(),
                 tags: x.tags.unwrap(),
                 difficulty: x.difficulty.unwrap(),
@@ -48,8 +48,24 @@ impl Database for MySqlDatabase {
         return q;
     }
 
-    async fn add_problem(&self, problem_title: String, problem_body: String, difficulty: String) {
-        todo!()
+    async fn add_problem(
+        &self,
+        problem_title: String,
+        problem_body: String,
+        difficulty: String,
+        tags: String,
+    ) {
+        sqlx::query!(
+            "insert into Problem(title,body,tags,difficulty) values(?,?,?,?)",
+            problem_title,
+            problem_body,
+            tags,
+            difficulty
+        )
+        .execute(&self.pool)
+        .await
+        .unwrap();
+        println!("Inserted Problem:{:?}", problem_title);
     }
     async fn add_solution() {
         todo!()

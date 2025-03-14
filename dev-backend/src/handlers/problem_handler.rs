@@ -17,3 +17,12 @@ pub async fn get_problems(db: web::Data<MySqlDatabase>, limit: web::Path<u32>) -
     let pr = db.get_problems(limit.into_inner()).await;
     HttpResponse::Ok().json(pr)
 }
+
+pub async fn add_problem(db: web::Data<MySqlDatabase>, form: web::Query<Problem>) -> HttpResponse {
+    let title = form.title.clone();
+    let body = form.body.clone();
+    let tags = form.tags.clone();
+    let difficulty = form.difficulty.clone();
+    let pr = db.add_problem(title, body, difficulty, tags).await;
+    HttpResponse::Ok().json(pr)
+}
