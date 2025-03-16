@@ -1,0 +1,18 @@
+version: '3.8'
+services:
+  db: 
+    image: mysql:8.3.0
+    container_name: mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: admin 
+      MYSQL_DATABASE: dev-codearena 
+      MYSQL_USER: admin 
+      MYSQL_PASSWORD: admin 
+    ports: 
+      - "3306:3306"
+    volumes:
+      - ./mysql-data:/var/lib/mysql  
+      - ./dev-bd/initdb/dev-codearena-2025-03-16.sql:/docker-entrypoint-initdb.d/dev-codearena.sql
+#      - ./mysql-config:/etc/mysql/conf.d
+volumes:
+  db_data:
