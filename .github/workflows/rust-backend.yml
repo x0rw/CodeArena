@@ -30,6 +30,6 @@ jobs:
           toolchain: stable
           override: true
       - name: Build
-        run: cargo build --offline
+        run:  cd dev-backend && cargo build --offline
       - name: Run tests
-        run: cargo test --offline
+        run:  cd dev-backend && cargo test --offline
