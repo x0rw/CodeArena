@@ -2,8 +2,8 @@ use std::env;
 
 use crate::{
     models::{
-        problem::{self, Problem},
         problem_query::{ProblemByTagQuery, ProblemsQuery},
+        solution_query::SolutionByProblemId,
     },
     repositories::{database::Database, mysql_database::MySqlDatabase},
 };
@@ -11,35 +11,22 @@ use actix_web::{web, HttpResponse};
 
 use sqlx::{mysql::MySqlPool, Execute};
 
-pub async fn get_problem(db: web::Data<MySqlDatabase>, problem_id: web::Path<u32>) -> HttpResponse {
-    let pr = db.get_problem(problem_id.into_inner()).await;
-    HttpResponse::Ok().json(pr)
-}
-
-pub async fn get_problems(
+pub async fn get_solutions_by_problem(
     db: web::Data<MySqlDatabase>,
-    limitq: web::Query<ProblemsQuery>,
+    query: web::Query<SolutionByProblemId>,
 ) -> HttpResponse {
-    let limit = limitq.limit.unwrap_or(10);
-    let pr = db.get_problems(limit).await;
-    HttpResponse::Ok().json(pr)
+    println!("get_solutions_by_problem");
+    let problem_id = query.problem_id.clone().unwrap().parse::<u32>().unwrap();
+    let limit = query.limit.unwrap_or(10);
+    let res = db.get_solutions_by_problem(problem_id, limit).await;
+    HttpResponse::Ok().json(res)
 }
-
-pub async fn get_problems_by_tag(
+pub async fn get_solution(
     db: web::Data<MySqlDatabase>,
-    q: web::Query<ProblemByTagQuery>,
+    solution_id: web::Path<u32>,
 ) -> HttpResponse {
-    let tag = q.tags.clone().unwrap_or("Default".to_string());
-    let limit = q.limit.unwrap_or(10);
-    let pr = db.get_problems_by_tag(tag, limit).await;
-    HttpResponse::Ok().json(pr)
-}
-
-pub async fn add_problem(db: web::Data<MySqlDatabase>, form: web::Query<Problem>) -> HttpResponse {
-    let title = form.title.clone();
-    let body = form.body.clone();
-    let tags = form.tags.clone();
-    let difficulty = form.difficulty.clone();
-    let pr = db.add_problem(title, body, difficulty, tags).await;
-    HttpResponse::Ok().json(pr)
+    let id = solution_id.into_inner();
+    println!("id: {id}");
+    let res = db.get_solution_by_id(id).await;
+    HttpResponse::Ok().json(res)
 }

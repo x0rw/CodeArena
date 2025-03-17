@@ -16,6 +16,7 @@ pub trait Database {
     async fn add_solution(&self, id_user: u32, id_problem: u32, body: String, language: String);
     async fn get_solution(&self, id_problem: u32, id_user: u32) -> Solution;
     async fn get_solutions_by_problem(&self, id_problem: u32, limit: u32) -> Vec<Solution>;
+    async fn get_solution_by_id(&self, id_solution: u32) -> Solution;
     async fn get_user(&self, user_id: u32) -> Vec<User>;
     async fn get_users();
 }

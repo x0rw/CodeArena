@@ -122,6 +122,25 @@ impl Database for MySqlDatabase {
         return q;
     }
 
+    async fn get_solution_by_id(&self, id_solution: u32) -> Solution {
+        let q = sqlx::query!(" SELECT * FROM Solution where idSolution=?", id_solution)
+            .map(|x| Solution {
+                solution_id: Some(x.idSolution),
+                body: x.body.unwrap_or_default(),
+                submitted_at: x.submitted_at.unwrap().to_string(),
+                language: x.language.unwrap_or_default(),
+                status: x.status.unwrap_or_default(),
+                execution_time: x.execution_time,
+                memory_usage: x.memory_usage,
+                problem_id: x.Problem_idProblem.to_string(),
+                user_id: x.User_idUser.to_string(),
+            })
+            .fetch_one(&self.pool)
+            .await
+            .unwrap();
+        return q;
+    }
+
     async fn get_solutions_by_problem(&self, id_problem: u32, limit: u32) -> Vec<Solution> {
         let q = sqlx::query!(
             " SELECT * FROM Solution where Problem_idProblem=? ",

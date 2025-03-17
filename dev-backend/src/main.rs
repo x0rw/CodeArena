@@ -11,7 +11,7 @@ use actix_web::{web::Data, App, HttpServer};
 use config::db;
 use dotenv::dotenv;
 use repositories::{database, mysql_database::MySqlDatabase};
-use routes::problem_routes::init;
+use routes::problem_routes::problem_config;
 use std::env;
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
@@ -28,7 +28,7 @@ async fn main() -> std::io::Result<()> {
     println!("api running at {host}:{port}");
     HttpServer::new(move || {
         App::new()
-            .configure(init)
+            .configure(problem_config)
             .app_data(Data::new(db_pool.clone()))
     })
     .bind(format!("{host}:{port}"))?
