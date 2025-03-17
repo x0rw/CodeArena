@@ -8,21 +8,28 @@ on:
     paths:
       - "dev-backend/**"
 env:
-  CARGO_TERM_COLOR: always
-
+  CARGO_TERM_COLOR: always    
 jobs:
-  build:
-
+  test:
     runs-on: ubuntu-latest
-    
     steps:
-    - uses: actions/checkout@v4
-    - name: Build (Offline Mode)
-      run: | 
-        cd dev-backend
-        cargo build --offline --verbose
-        
-    - name: Run tests
-      run: |
-        cd dev-backend
-        cargo test --verbose
+      - uses: actions/checkout@v3
+      - name: Cache Cargo registry
+        uses: actions/cache@v3
+        with:
+          path: ~/.cargo/registry
+          key: cargo-registry-${{ runner.os }}-${{ hashFiles('**/Cargo.lock') }}
+      - name: Cache Cargo build
+        uses: actions/cache@v3
+        with:
+          path: target
+          key: cargo-build-${{ runner.os }}-${{ hashFiles('**/Cargo.lock') }}
+      - name: Set up Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+      - name: Build
+        run: cargo build --offline
+      - name: Run tests
+        run: cargo test --offline
