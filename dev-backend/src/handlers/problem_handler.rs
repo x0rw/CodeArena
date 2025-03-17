@@ -1,7 +1,10 @@
 use std::env;
 
 use crate::{
-    models::problem::{self, Problem},
+    models::{
+        problem::{self, Problem},
+        problem_query::{ProblemByTagQuery, ProblemsQuery},
+    },
     repositories::{database::Database, mysql_database::MySqlDatabase},
 };
 use actix_web::{web, HttpResponse};
@@ -13,19 +16,22 @@ pub async fn get_problem(db: web::Data<MySqlDatabase>, problem_id: web::Path<u32
     HttpResponse::Ok().json(pr)
 }
 
-pub async fn get_problems(db: web::Data<MySqlDatabase>, limit: web::Path<u32>) -> HttpResponse {
-    let pr = db.get_problems(limit.into_inner()).await;
+pub async fn get_problems(
+    db: web::Data<MySqlDatabase>,
+    limitq: web::Query<ProblemsQuery>,
+) -> HttpResponse {
+    let limit = limitq.limit.unwrap_or(10);
+    let pr = db.get_problems(limit).await;
     HttpResponse::Ok().json(pr)
 }
 
 pub async fn get_problems_by_tag(
     db: web::Data<MySqlDatabase>,
-    limit: web::Path<u32>,
-    tag: web::Path<String>,
+    q: web::Query<ProblemByTagQuery>,
 ) -> HttpResponse {
-    let pr = db
-        .get_problems_by_tag(tag.into_inner(), limit.into_inner())
-        .await;
+    let tag = q.tags.clone().unwrap_or("Default".to_string());
+    let limit = q.limit.unwrap_or(10);
+    let pr = db.get_problems_by_tag(tag, limit).await;
     HttpResponse::Ok().json(pr)
 }
 

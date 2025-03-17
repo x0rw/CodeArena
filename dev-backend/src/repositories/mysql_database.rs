@@ -21,6 +21,7 @@ impl MySqlDatabase {
 }
 impl Database for MySqlDatabase {
     async fn get_problems(&self, limit: u32) -> Vec<Problem> {
+        println!("get_problems({limit})");
         let q = sqlx::query!(" SELECT * FROM Problem LIMIT ? ", limit)
             .map(|x| Problem {
                 problem_id: Some(x.idProblem),
@@ -36,6 +37,7 @@ impl Database for MySqlDatabase {
     }
 
     async fn get_problems_by_tag(&self, problem_tag: String, limit: u32) -> Vec<Problem> {
+        println!("get_problems_by_tag({problem_tag},{limit}");
         let q = sqlx::query!(" SELECT * FROM Problem where tags=?", problem_tag)
             .map(|x| Problem {
                 problem_id: Some(x.idProblem),

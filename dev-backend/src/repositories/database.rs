@@ -13,20 +13,6 @@ pub trait Database {
         difficulty: String,
         tags: String,
     );
-    /*
-        idSolution	int AI PK
-        idUser	varchar(45)
-        idProblem	varchar(45)
-        body	varchar(45)
-        submitted_at	date
-        language	varchar(45)
-        status	varchar(45)
-        execution_time	varchar(45)
-        memory_usage	varchar(45)
-        Problem_idProblem	int PK
-        User_idUser	int PK
-    **/
-
     async fn add_solution(&self, id_user: u32, id_problem: u32, body: String, language: String);
     async fn get_solution(&self, id_problem: u32, id_user: u32) -> Solution;
     async fn get_solutions_by_problem(&self, id_problem: u32, limit: u32) -> Vec<Solution>;
