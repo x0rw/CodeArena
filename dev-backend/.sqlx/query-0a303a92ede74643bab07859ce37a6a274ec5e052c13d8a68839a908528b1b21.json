@@ -1,0 +1,74 @@
+{
+  "db_name": "MySQL",
+  "query": " SELECT * FROM User where idUser=? ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "idUser",
+        "type_info": {
+          "type": "Long",
+          "flags": "NOT_NULL | PRIMARY_KEY | UNIQUE_KEY | AUTO_INCREMENT",
+          "max_size": 11
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "username",
+        "type_info": {
+          "type": "VarString",
+          "flags": "NOT_NULL | NO_DEFAULT_VALUE",
+          "max_size": 180
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "password",
+        "type_info": {
+          "type": "VarString",
+          "flags": "NOT_NULL | NO_DEFAULT_VALUE",
+          "max_size": 180
+        }
+      },
+      {
+        "ordinal": 3,
+        "name": "email",
+        "type_info": {
+          "type": "VarString",
+          "flags": "NOT_NULL | NO_DEFAULT_VALUE",
+          "max_size": 180
+        }
+      },
+      {
+        "ordinal": 4,
+        "name": "birth_date",
+        "type_info": {
+          "type": "Date",
+          "flags": "BINARY",
+          "max_size": 10
+        }
+      },
+      {
+        "ordinal": 5,
+        "name": "country",
+        "type_info": {
+          "type": "VarString",
+          "flags": "",
+          "max_size": 180
+        }
+      }
+    ],
+    "parameters": {
+      "Right": 1
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      true,
+      true
+    ]
+  },
+  "hash": "0a303a92ede74643bab07859ce37a6a274ec5e052c13d8a68839a908528b1b21"
+}

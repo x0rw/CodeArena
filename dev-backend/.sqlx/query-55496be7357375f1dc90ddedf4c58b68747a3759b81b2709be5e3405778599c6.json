@@ -1,0 +1,104 @@
+{
+  "db_name": "MySQL",
+  "query": " SELECT * FROM Solution where Problem_idProblem=? and User_idUser=?",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "idSolution",
+        "type_info": {
+          "type": "Long",
+          "flags": "NOT_NULL | PRIMARY_KEY | UNIQUE_KEY | AUTO_INCREMENT",
+          "max_size": 11
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "body",
+        "type_info": {
+          "type": "VarString",
+          "flags": "",
+          "max_size": 180
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "submitted_at",
+        "type_info": {
+          "type": "Date",
+          "flags": "BINARY",
+          "max_size": 10
+        }
+      },
+      {
+        "ordinal": 3,
+        "name": "language",
+        "type_info": {
+          "type": "VarString",
+          "flags": "",
+          "max_size": 180
+        }
+      },
+      {
+        "ordinal": 4,
+        "name": "status",
+        "type_info": {
+          "type": "VarString",
+          "flags": "",
+          "max_size": 180
+        }
+      },
+      {
+        "ordinal": 5,
+        "name": "execution_time",
+        "type_info": {
+          "type": "VarString",
+          "flags": "",
+          "max_size": 180
+        }
+      },
+      {
+        "ordinal": 6,
+        "name": "memory_usage",
+        "type_info": {
+          "type": "VarString",
+          "flags": "",
+          "max_size": 180
+        }
+      },
+      {
+        "ordinal": 7,
+        "name": "Problem_idProblem",
+        "type_info": {
+          "type": "Long",
+          "flags": "NOT_NULL | PRIMARY_KEY | MULTIPLE_KEY | NO_DEFAULT_VALUE",
+          "max_size": 11
+        }
+      },
+      {
+        "ordinal": 8,
+        "name": "User_idUser",
+        "type_info": {
+          "type": "Long",
+          "flags": "NOT_NULL | PRIMARY_KEY | MULTIPLE_KEY | NO_DEFAULT_VALUE",
+          "max_size": 11
+        }
+      }
+    ],
+    "parameters": {
+      "Right": 2
+    },
+    "nullable": [
+      false,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      false,
+      false
+    ]
+  },
+  "hash": "55496be7357375f1dc90ddedf4c58b68747a3759b81b2709be5e3405778599c6"
+}

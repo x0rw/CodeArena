@@ -1,0 +1,64 @@
+{
+  "db_name": "MySQL",
+  "query": " SELECT * FROM Problem where idProblem=?",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "idProblem",
+        "type_info": {
+          "type": "Long",
+          "flags": "NOT_NULL | PRIMARY_KEY | UNIQUE_KEY | AUTO_INCREMENT",
+          "max_size": 11
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "title",
+        "type_info": {
+          "type": "VarString",
+          "flags": "",
+          "max_size": 180
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "body",
+        "type_info": {
+          "type": "Blob",
+          "flags": "BLOB",
+          "max_size": 262140
+        }
+      },
+      {
+        "ordinal": 3,
+        "name": "tags",
+        "type_info": {
+          "type": "VarString",
+          "flags": "",
+          "max_size": 180
+        }
+      },
+      {
+        "ordinal": 4,
+        "name": "difficulty",
+        "type_info": {
+          "type": "VarString",
+          "flags": "",
+          "max_size": 180
+        }
+      }
+    ],
+    "parameters": {
+      "Right": 1
+    },
+    "nullable": [
+      false,
+      true,
+      true,
+      true,
+      true
+    ]
+  },
+  "hash": "337161ce0f306d0e466c651e110608f73cc4feb0ecca23804ae228bbee955798"
+}

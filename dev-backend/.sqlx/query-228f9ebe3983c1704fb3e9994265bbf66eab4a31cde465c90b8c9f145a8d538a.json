@@ -1,0 +1,12 @@
+{
+  "db_name": "MySQL",
+  "query": "\n            insert into Solution(body,language,status,Problem_idProblem,User_idUser) \n            Values(?,?, 'processing',?, ?)",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 4
+    },
+    "nullable": []
+  },
+  "hash": "228f9ebe3983c1704fb3e9994265bbf66eab4a31cde465c90b8c9f145a8d538a"
+}

@@ -1,0 +1,12 @@
+{
+  "db_name": "MySQL",
+  "query": "insert into Problem(title,body,tags,difficulty) values(?,?,?,?)",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 4
+    },
+    "nullable": []
+  },
+  "hash": "93522ca7195a637e5e9cfadd01df555725d6fde4098d0b9031c0927d641ceee8"
+}
