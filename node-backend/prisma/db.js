@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 
 const findUser = async (username) => {
   try {
-    return await prisma.users.findUnique({
+    return await prisma.User.findUnique({
       where: { username },
     });
   } catch (error) {
@@ -33,15 +33,15 @@ const checkUser = async (username, password) => {
 
 const addUser = async (username, email, password) => {
   try {
-    const existingUser = await userService.findUser(username);
+    const existingUser = await findUser(username);
     if (existingUser) throw new Error('Username exists');
 
     const hashedPass = await bcrypt.hash(password, SALTROUNDS);
-    const add = await prisma.users.create({
+    const add = await prisma.User.create({
       data: {
         username: username,
         email: email,
-        password_hash: hashedPass,
+        password: password, // change it to hashedPass
       },
     })
   } catch (error) {
@@ -54,7 +54,7 @@ const removeUser = async (username) => {
     const user = await findUser(username);
     if (!user) throw new Error('User not found');
 
-    return await prisma.user.delete({
+    return await prisma.User.delete({
       where: { username },
     });
   } catch (error) {
@@ -64,10 +64,10 @@ const removeUser = async (username) => {
 
 const updateUser = async () => {
   try {
-    const update = await prisma.users.update({
+    const update = await prisma.User.update({
       where: { username },
       data: {
-        password_hash: 'new password',
+        password: 'new password',
       }
     })
   } catch (error) {
@@ -75,3 +75,11 @@ const updateUser = async () => {
   }
 }
 
+
+async function main() {
+
+}
+
+main()
+  .catch((e) => console.error(e))
+  .finally(() => prisma.$disconnect());
