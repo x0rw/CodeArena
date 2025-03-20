@@ -2,8 +2,10 @@ use std::env;
 
 use crate::{
     models::{
+        problem,
         problem_query::{ProblemByTagQuery, ProblemsQuery},
-        solution_query::SolutionByProblemId,
+        solution::Solution,
+        solution_query::{AddSolution, SolutionByProblemId},
     },
     repositories::{database::Database, mysql_database::MySqlDatabase},
 };
@@ -29,4 +31,17 @@ pub async fn get_solution(
     println!("id: {id}");
     let res = db.get_solution_by_id(id).await;
     HttpResponse::Ok().json(res)
+}
+
+pub async fn add_solution(
+    db: web::Data<MySqlDatabase>,
+    form: web::Query<AddSolution>,
+) -> HttpResponse {
+    let language = form.language.clone();
+    let problem_id = form.problem_id.clone();
+    let user_id = form.user_id.clone();
+    let body = form.body.clone();
+    println!("lang:{language}, problem_id: {problem_id}, user_id: {user_id}, body: {body}");
+    let pr = db.add_solution(user_id, problem_id, body, language).await;
+    HttpResponse::Ok().json(pr)
 }

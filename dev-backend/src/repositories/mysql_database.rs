@@ -95,8 +95,12 @@ impl Database for MySqlDatabase {
             body,
             language,
             id_problem,
-            id_user
-        );
+            1
+        )
+        .execute(&self.pool)
+        .await
+        .unwrap();
+        println!("{res:#?}");
     }
 
     async fn get_solution(&self, id_problem: u32, id_user: u32) -> Solution {
