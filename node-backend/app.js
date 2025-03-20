@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-import express from 'express';
-import appconfig from './config/config.js';
-import userRouter from './routes/userRoutes.js'
-import authRouter from './routes/authRoutes.js'
-
-const app = express();
-app.use(authRouter);
-app.use(userRouter);
-
-const PORT = appconfig.port;
-=======
 import express, { urlencoded } from 'express';
 import config from './config/config.js';
 import authRouter from './routes/authRoutes.js';
@@ -22,7 +10,6 @@ app.use(urlencoded({ extended: true }));
 app.use('/api/auth', authRouter);
 app.use('/api/auth', userRouter);
 
->>>>>>> branch_Nodejs
 
 app.use((err, req, res, next) => {
   if (err) {

@@ -7,76 +7,10 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Container {
-  idcontainer Int     @id @unique(map: "idcontainer_UNIQUE") @default(autoincrement())
-  status      String? @db.VarChar(45)
-  image       String? @db.VarChar(45)
-  language    String? @db.VarChar(45)
-}
-
-model Problem {
-  idProblem       Int               @id @unique(map: "idProblem_UNIQUE") @default(autoincrement())
-  title           String?           @db.VarChar(45)
-  body            String?           @db.Text
-  tags            String?           @db.VarChar(45)
-  difficulty      String?           @db.VarChar(45)
-  ProblemProgress ProblemProgress[]
-  Solution        Solution[]
-  TestCase        TestCase[]
-}
-
-model ProblemProgress {
-  idUserProgress    Int     @unique(map: "idUserProgress_UNIQUE") @default(autoincrement())
-  status            String? @db.VarChar(45)
-  User_idUser       Int
-  Problem_idProblem Int
-  Problem           Problem @relation(fields: [Problem_idProblem], references: [idProblem], onDelete: NoAction, onUpdate: NoAction, map: "fk_ProblemProgress_Problem1")
-  User              User    @relation(fields: [User_idUser], references: [idUser], onDelete: NoAction, onUpdate: NoAction, map: "fk_ProblemProgress_User")
-
-  @@id([idUserProgress, User_idUser, Problem_idProblem])
-  @@index([Problem_idProblem], map: "fk_ProblemProgress_Problem1_idx")
-  @@index([User_idUser], map: "fk_ProblemProgress_User_idx")
-}
-
-model Solution {
-  idSolution        Int       @unique(map: "idSolution_UNIQUE") @default(autoincrement())
-  idUser            String?   @db.VarChar(45)
-  idProblem         String?   @db.VarChar(45)
-  body              String?   @db.VarChar(45)
-  submitted_at      DateTime? @db.Date
-  language          String?   @db.VarChar(45)
-  status            String?   @db.VarChar(45)
-  execution_time    String?   @db.VarChar(45)
-  memory_usage      String?   @db.VarChar(45)
-  Problem_idProblem Int
-  User_idUser       Int
-  Problem           Problem   @relation(fields: [Problem_idProblem], references: [idProblem], onDelete: NoAction, onUpdate: NoAction, map: "fk_Solution_Problem1")
-  User              User      @relation(fields: [User_idUser], references: [idUser], onDelete: NoAction, onUpdate: NoAction, map: "fk_Solution_User1")
-
-  @@id([idSolution, Problem_idProblem, User_idUser])
-  @@index([Problem_idProblem], map: "fk_Solution_Problem1_idx")
-  @@index([User_idUser], map: "fk_Solution_User1_idx")
-}
-
-model TestCase {
-  idTestCase        Int     @unique(map: "idTestCase_UNIQUE") @default(autoincrement())
-  inputs            String? @db.VarChar(45)
-  outputs           String? @db.VarChar(45)
-  problem_id        Int?
-  Problem_idProblem Int
-  Problem           Problem @relation(fields: [Problem_idProblem], references: [idProblem], onDelete: NoAction, onUpdate: NoAction, map: "fk_TestCase_Problem1")
-
-  @@id([idTestCase, Problem_idProblem])
-  @@index([Problem_idProblem], map: "fk_TestCase_Problem1_idx")
-}
-
-model User {
-  idUser          Int               @id @unique(map: "idUser_UNIQUE") @default(autoincrement())
-  username        String            @unique(map: "username_UNIQUE") @db.VarChar(45)
-  password        String            @db.VarChar(45)
-  email           String            @unique(map: "email_UNIQUE") @db.VarChar(45)
-  birth_date      DateTime?         @db.Date
-  country         String?           @db.VarChar(45)
-  ProblemProgress ProblemProgress[]
-  Solution        Solution[]
+model users {
+  id            Int       @id @default(autoincrement())
+  username      String    @unique(map: "username") @db.VarChar(50)
+  email         String    @unique(map: "email") @db.VarChar(100)
+  password_hash String    @db.VarChar(255)
+  created_at    DateTime? @default(now()) @db.Timestamp(0)
 }
