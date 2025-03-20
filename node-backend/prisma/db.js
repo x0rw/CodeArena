@@ -1,6 +1,6 @@
 const { PrismaClient } = await import('@prisma/client');
 import bcrypt from 'bcrypt';
-import { SALTROUNDS } from '../config/config.js';
+import config from '../config/config.js';
 //local db table name : users .
 
 const prisma = new PrismaClient();
@@ -8,7 +8,8 @@ const prisma = new PrismaClient();
 const findUser = async (username) => {
   try {
     return await prisma.users.findUnique({
-      where: { username },
+      where: { username: username },
+
     });
   } catch (error) {
     throw new Error(`findUser error: ${error.message}`);
@@ -33,10 +34,10 @@ const checkUser = async (username, password) => {
 
 const addUser = async (username, email, password) => {
   try {
-    const existingUser = await userService.findUser(username);
-    if (existingUser) throw new Error('Username exists');
+    //    const existingUser = await findUser(username);
+    //    if (existingUser) throw new Error('Username exists');
 
-    const hashedPass = await bcrypt.hash(password, SALTROUNDS);
+    const hashedPass = await bcrypt.hash(password, config.saltRounds);
     const add = await prisma.users.create({
       data: {
         username: username,
@@ -54,7 +55,7 @@ const removeUser = async (username) => {
     const user = await findUser(username);
     if (!user) throw new Error('User not found');
 
-    return await prisma.user.delete({
+    return await prisma.users.delete({
       where: { username },
     });
   } catch (error) {
@@ -75,3 +76,10 @@ const updateUser = async () => {
   }
 }
 
+export default {
+  findUser,
+  checkUser,
+  addUser,
+  removeUser,
+  updateUser
+};
