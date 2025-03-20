@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-
-
-
-
-const register = async () => {
-  console.log('fuck');
-
-}
-
-export default register;
-=======
 import jwt from "jsonwebtoken";
 import errorHandler from "../utils/errorHandler.js";
 import prisma_db from "../prisma/db.js";
@@ -47,6 +35,3 @@ export default {
   login,
   logout
 }
-
-register()
->>>>>>> branch_Nodejs
