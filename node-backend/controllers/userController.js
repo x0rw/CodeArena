@@ -1,31 +1,35 @@
 import express from 'express';
 import path from 'path';
+import cookieParser from 'cookie-parser';
 
-const userController = {
-  users: async (req, res, next) => {
-    // Logic to fetch all users
-  },
+// const users = async (req, res, next) => {},
+//const admin = async (req, res, next) => {},
 
-  userbyid: async (req, res, next) => {
-    // Logic to fetch a user by ID
-  },
 
-  dashboard: async (req, res, next) => {
-    // Logic for the dashboard view
-  },
-
-  register: async (req, res, next) => {
-    // Logic for the register page
-  },
-
-  login: async (req, res, next) => {
-    // Logic for the login page
-  },
-
-  logout: async (req, res, next) => {
-    // Logic to handle user logout
-  }
+const userById = async (req, res, next) => {
 };
 
-export default userController;
+const dashboard = async (req, res, next) => {
+};
+
+const register = async (req, res, next) => {
+};
+
+const login = async (req, res, next) => {
+};
+
+const logout = async (req, res, next) => {
+  res.clearCookie('accessToken');
+  res.clearCookie('refreshToken');
+  res.sendStatus(204);
+  // Add a redirect
+};
+
+export default {
+  userById,
+  dashboard,
+  register,
+  login,
+  logout
+};
 

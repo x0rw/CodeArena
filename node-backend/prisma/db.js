@@ -1,6 +1,7 @@
 const { PrismaClient } = await import('@prisma/client');
 import bcrypt from 'bcrypt';
 import config from '../config/config.js';
+import errorHandler from '../utils/errorHandler.js';
 //local db table name : users .
 
 const prisma = new PrismaClient();
@@ -11,7 +12,7 @@ const findUser = async (username) => {
       where: { username: username },
     });
   } catch (error) {
-    throw new Error(`findUser error: ${error.message}`);
+    next(new errorHandler.DatabaseConnectionError(`findUser error: ${error.message}`));
   }
 };
 
@@ -19,15 +20,15 @@ const checkUser = async (username, password) => {
   try {
     const user = await findUser(username);
     if (!user) {
-      throw new Error('User not found');
+      throw new errorHandler.ValidationError('User not found');
     }
-    const validPass = await bcrypt.compare(password, user.password);
+    const validPass = await bcrypt.compare(password, user.password_hash);
     if (!validPass) {
-      throw new Error('Invalid password');
+      throw new errorHandler.ValidationError('Invalid password');
     }
     return user;
   } catch (error) {
-    throw new Error(`Authentication failed: ${error.message}`);
+    next(new errorHandler.UnauthorizedError(`Authentication failed: ${error.message}`));
   }
 }
 
@@ -41,44 +42,44 @@ const addUser = async (username, email, password) => {
       data: {
         username: username,
         email: email,
-        password: password, // change it to hashedPass
+        password_hash: hashedPass, // change it to hashedPass
       },
     })
+    return add;
   } catch (error) {
-    throw new Error(`addUser failed: ${error.message}`);
+    next(new errorHandler.InternalServerError(`addUser failed: ${error.message}`));
   }
 }
 
 const removeUser = async (username) => {
   try {
     const user = await findUser(username);
-    if (!user) throw new Error('User not found');
+    if (!user) throw new errorHandler.ValidationError('User not found');
 
     return await prisma.users.delete({
       where: { username },
     });
   } catch (error) {
-    throw new Error(`removeUser failed: ${error.message}`);
+    next(new errorHandler.InternalServerError(`removeUser failed: ${error.message}`));
   }
 }
 
 const updateUser = async () => {
   try {
-    const update = await prisma.User.update({
+    const update = await prisma.users.update({
       where: { username },
       data: {
-        password: 'new password',
+        password_hash: 'new password',
       }
     })
   } catch (error) {
-    throw new Error(`updateUser failed: ${error.message}`);
+    next(new errorHandler.InternalServerError(`updateUser failed: ${error.message}`));
   }
 }
 
 
-main()
-  .catch((e) => console.error(e))
-  .finally(() => prisma.$disconnect());
+//  .catch((e) => console.error(e))
+//  .finally(() => prisma.$disconnect());
 
 
 export default {
