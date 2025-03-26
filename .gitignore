@@ -6,4 +6,4 @@ mysql-data/
 **/*.swp
 
 *.pdb
-node-backend/node_modules/
+**/node_modules/
