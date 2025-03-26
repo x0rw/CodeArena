@@ -1,12 +1,21 @@
-import Navbar from '../components/navbar.tsx';
-import Carousel from '../components/carousel.tsx';
-import Card from '../components/card.tsx';
-import Footer from '../components/footer.tsx';
-export default function Home() {
-  return (
-    <>
-   <Navbar />
-   <Card title="hello this is a test" text="This is some text" imgSrc="https://placehold.jp/150x150.png" />
-    </>
-  );
+import Link from 'next/link';
+import Navbar from '../components/navbar';
+import ProblemsList from '../components/ProblemsList';
+import React, { useEffect, useState } from 'react';
+
+interface Problem {
+  title: string;
+  description: string;
+  difficulty: string;
 }
+
+const IndexPage = () => {
+  return (
+ <div>
+  <Navbar/>
+  <ProblemsList/>
+    </div> 
+  );
+};
+
+export default IndexPage;
