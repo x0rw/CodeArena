@@ -11,21 +11,19 @@ interface Problem {
 const difficultyClass = (difficulty: string) => {
   switch (difficulty) {
     case "Easy":
-      return "text-success fw-bold"; 
+      return 'bg-green-100 text-green-800';
     case "Medium":
-      return "text-warning fw-bold";
+      return 'bg-yellow-100 text-yellow-800';
     case "Hard":
-      return "text-danger fw-bold";
+      return 'bg-red-100 text-red-800';
     default:
-      return "text-secondary";
+      return "text-warning fw-bold";
   }
 };
 
 const problems = [
   {
-    title: "Two Sum",
-    description: "Given an array of integers, return indices of the two numbers such that they add up to a specific target.",
-    difficulty: "Easy"
+    title: "Two Sum", description: "Given an array of integers, return indices of the two numbers such that they add up to a specific target.", difficulty: "Easy"
   },
   {
     title: "Longest Substring Without Repeating Characters",
@@ -53,11 +51,7 @@ const ProblemsList = () => {
             </div>
             <span
               className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                problem.difficulty === 'Easy'
-                  ? 'bg-green-100 text-green-800'
-                  : problem.difficulty === 'Medium'
-                  ? 'bg-yellow-100 text-yellow-800'
-                  : 'bg-red-100 text-red-800'
+                difficultyClass(problem.difficulty)
               }`}
             >
               {problem.difficulty}
