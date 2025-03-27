@@ -11,10 +11,16 @@ interface Problem {
 
 const IndexPage = () => {
   return (
- <div>
-  <Navbar/>
-  <ProblemsList/>
-    </div> 
+ <>
+ <div className="bg-gray-50">
+      <header className="py-4 bg-white shadow">
+        <h1 className="text-center text-4xl font-bold">CodeArena</h1>
+      </header>
+      <main className="mt-8">
+        <ProblemsList />
+      </main>
+    </div>
+    </> 
   );
 };
 
