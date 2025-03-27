@@ -16,8 +16,8 @@ const Navbar = () => {
             <Link href="/problems" className="text-white hover:text-gray-200">
               Problems
             </Link>
-            <Link href="/contest" className="text-white hover:text-gray-200">
-              Contests
+            <Link href="/problem/2" className="text-white hover:text-gray-200">
+Random problem
             </Link>
             <Link href="/login" className="text-white hover:text-gray-200">
              Login 

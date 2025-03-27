@@ -54,16 +54,15 @@ export const getStaticProps: GetStaticProps<ProblemProps> = async (context) => {
 
   return {
     props: {problem},
-    revalidate: 60, // Enable ISR: re-generate every 60 seconds
+    revalidate: 60, 
   };
 };
 
 export default function ProblemEditor({problem} : ProblemProps) {
-  const [code, setCode] = useState("// Write your solution here\n");
+  const [code, setCode] = useState("// Write your RUST solution here\n");
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
-      {/* Problem Section */}
       <Card className="p-4">
         <h2 className="text-xl font-semibold">{problem.title}</h2>
         <p className="text-gray-600 mt-2">{problem.body}</p>
