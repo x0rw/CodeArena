@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import ProblemCard from '../components/problemCard.tsx';
 import Login from '../pages/login.tsx';
 
+import Link from 'next/link';
+
 interface Problem {
   title: string;
   description: string;
@@ -20,43 +22,45 @@ const difficultyClass = (difficulty: string) => {
       return "text-warning fw-bold";
   }
 };
+interface Problem {
+  problem_id: number;
+  title: string;
+  description: string;
+  difficulty: string;
+}
 
-const problems = [
-  {
-    title: "Two Sum", description: "Given an array of integers, return indices of the two numbers such that they add up to a specific target.", difficulty: "Easy"
-  },
-  {
-    title: "Longest Substring Without Repeating Characters",
-    description: "Given a string, find the length of the longest substring without repeating characters.",
-    difficulty: "Medium"
-  },
-  {
-    title: "Median of Two Sorted Arrays",
-    description: "Given two sorted arrays, find the median of the two sorted arrays.",
-    difficulty: "Hard"
-  }
-];
+interface ProblemsListProps {
+  problems: Problem[];
+}
 
-const ProblemsList = () => {
+
+
+const ProblemsList = ({ problems }: ProblemsListProps) => {
   return (
     // bullshit tailwind
     <div className="max-w-7xl mx-auto px-4 py-6">
       <h2 className="text-2xl font-bold mb-4">Problems</h2>
       <ul className="divide-y divide-gray-300">
         {problems.map((problem, index) => (
-          <li key={index} className="py-4 flex items-center justify-between">
-            <div>
-              <h3 className="text-lg font-medium text-gray-900">{problem.title}</h3>
-              <p className="text-sm text-gray-600">{problem.description}</p>
-            </div>
-            <span
-              className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                difficultyClass(problem.difficulty)
-              }`}
+
+            <li key={index} className="py-4 items-center justify-between">
+ <Link 
+              href={`/problem/${problem.problem_id}`}
+              className="flex items-center justify-between hover:bg-gray-50 p-2 rounded transition-colors"
             >
-              {problem.difficulty}
-            </span>
-          </li>
+              <div>
+                  <h3 className="text-lg font-medium text-gray-900">{problem.title}</h3>
+                  <p className="text-sm text-gray-600">{problem.description}</p>
+                </div>
+                <span
+                  className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                    difficultyClass(problem.difficulty)
+                  }`}
+                >
+                  {problem.difficulty}
+                </span>
+              </Link>
+            </li>
         ))}
       </ul>
     </div>
