@@ -1,5 +1,5 @@
+/*
 import { GetStaticProps, GetStaticPaths } from 'next';
-
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -14,14 +14,14 @@ const problem = {
   example: `Input: nums = [2,7,11,15], target = 9\nOutput: [0,1]`,
 };
 
-interface Problem{
+interface Problem {
   problem_id: number;
   title: string;
   description: string;
   difficulty: string;
 }
 
-interface ProblemProps{
+interface ProblemProps {
   problem: Problem;
 }
 
@@ -30,7 +30,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const problems: Problem[] = await res.json();
 
   const paths = problems.map((problem) => ({
-    params: { id:problem.problem_id.toString()},
+    params: { id: problem.problem_id.toString() },
   }));
 
   return {
@@ -41,8 +41,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 // 2. Fetch data for each pre-rendered page
 export const getStaticProps: GetStaticProps<ProblemProps> = async (context) => {
-  const { id} = context.params!;
-  
+  const { id } = context.params!;
+
   const res = await fetch(`http://127.0.0.1:8080/api/problem/${id}`);
   const problem = await res.json();
 
@@ -53,12 +53,12 @@ export const getStaticProps: GetStaticProps<ProblemProps> = async (context) => {
   }
 
   return {
-    props: {problem},
-    revalidate: 60, 
+    props: { problem },
+    revalidate: 60,
   };
 };
 
-export default function ProblemEditor({problem} : ProblemProps) {
+export default function ProblemEditor({ problem }: ProblemProps) {
   const [code, setCode] = useState("// Write your RUST solution here\n");
 
   return (
@@ -69,8 +69,7 @@ export default function ProblemEditor({problem} : ProblemProps) {
         <pre className="p-2 mt-2 ">{problem.difficulty}</pre>
         <pre className="p-2 mt-2 ">{problem.tags}</pre>
       </Card>
-      
-      {/* Code Section */}
+
       <Card className="p-4 flex flex-col">
         <Tabs defaultValue="editor">
           <TabsList className="mb-2">
@@ -89,3 +88,4 @@ export default function ProblemEditor({problem} : ProblemProps) {
     </div>
   );
 }
+*/
