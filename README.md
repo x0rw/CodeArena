@@ -12,18 +12,18 @@ A fast, scalable platform for solving coding challenges with multi-language supp
 - GET /problem (get problem by id)
 - GET /problems (by limit)
 ## Routes usage example:
-- POST http://127.0.0.1:8080/api/problem?title=new problem 3&body=this is the body of the problem&tags=prob&difficulty=very not hard
-- GET http://127.0.0.1:8080/api/problem/2
+- POST http://127.0.0.1:8080/api/problem
+- GET http://127.0.0.1:8080/api/problem/:id
 - GET http://127.0.0.1:8080/api/problems
-- GET http://127.0.0.1:8080/api/problems?limit=2
-- GET http://127.0.0.1:8080/api/problems/by-tag?tags=greedy,algo
-- GET http://127.0.0.1:8080/api/problems/by-tag?tags=greedy,algo&limit=4
+- GET http://127.0.0.1:8080/api/problems/by-tag
+
 ## NodeJs Supported endpoints:
 - 
 - 
 ## ER Model
 ![ER Diagram](docs/ERR_modele.png)
 
+## Activity Diagram:
 ```mermaid
 flowchart TD
     A([Start]) --> B{Is User Logged In?}
@@ -51,4 +51,45 @@ flowchart TD
     S -->|No| U[Display Error: Wrong Answer/TLE]
     T --> L
     U --> P
+```
+## Sequence Diagram:
+```mermaid
+sequenceDiagram
+    actor User
+    participant Frontend as Frontend
+    participant APIGateway as API Gateway
+    participant AuthService
+    participant ProblemService
+    participant SubmissionService
+    participant ExecutionEngine
+
+    User->>Frontend: Opens website
+    Frontend->>Frontend: Renders static content
+    alt Not Logged In
+        User->>Frontend: Clicks "Login/Register"
+        Frontend->>AuthService: POST /auth/login (via API Gateway)
+        AuthService->>AuthService: Validates credentials
+        AuthService-->>Frontend: Returns JWT
+        Frontend->>Frontend: Stores JWT, redirects to dashboard
+    else Logged In (JWT exists)
+        Frontend->>APIGateway: GET /problems (with JWT)
+        APIGateway->>ProblemService: Forward request
+        ProblemService-->>APIGateway: Returns problem list
+        APIGateway-->>Frontend: Returns problem list
+        User->>Frontend: Selects problem
+        Frontend->>APIGateway: GET /problems/:id (with JWT)
+        APIGateway->>ProblemService: Forward request
+        ProblemService-->>APIGateway: Returns problem details
+        APIGateway-->>Frontend: Returns problem details
+    end
+
+    User->>Frontend: Submits code
+    Frontend->>APIGateway: POST /submissions (Code + Problem ID + JWT)
+    APIGateway->>SubmissionService: Forward request
+    SubmissionService->>ExecutionEngine: Execute code with test cases
+    ExecutionEngine->>SubmissionService: Returns result (AC/TLE/WA)
+    SubmissionService->>ProblemService: Updates leaderboard (if AC)
+    SubmissionService-->>APIGateway: Returns submission result
+    APIGateway-->>Frontend: Returns result
+    Frontend->>User: Displays verdict
 ```
