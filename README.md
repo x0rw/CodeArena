@@ -24,3 +24,31 @@ A fast, scalable platform for solving coding challenges with multi-language supp
 ## ER Model
 ![ER Diagram](docs/ERR_modele.png)
 
+```mermaid
+flowchart TD
+    A([Start]) --> B{Is User Logged In?}
+    B -->|No| C[Show Login/Register Options]
+    C --> D[Register]
+    C --> E[Login]
+    D --> F[Fill Registration Form]
+    E --> G[Enter Credentials]
+    F --> H[Validate & Create Account]
+    G --> I[Validate Credentials]
+    H --> J[Log In User]
+    I --> J
+    J --> K[Redirect to Dashboard]
+    B -->|Yes| K
+    K --> L[Browse Problems]
+    L --> M[Select Problem]
+    M --> N[View Problem Description]
+    N --> O{Want to Submit Solution?}
+    O -->|No| L
+    O -->|Yes| P[Write/Upload Code]
+    P --> Q[Submit Solution]
+    Q --> R[Code Execution Engine]
+    R --> S{Is Code Correct?}
+    S -->|Yes| T[Display Success: Accepted]
+    S -->|No| U[Display Error: Wrong Answer/TLE]
+    T --> L
+    U --> P
+```
