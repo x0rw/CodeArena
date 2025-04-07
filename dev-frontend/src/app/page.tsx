@@ -1,23 +1,16 @@
+import { Navbar } from "@components/Navbar";
+import { HeroSectionOne } from "./components/HeroSection";
+import Footer from "@components/Footer";
+import * as card from "./components/ui/card";
 
-/*
-interface Problem {
-  problem_id: number;
-  title: string;
-  description: string;
-  difficulty: string;
-}
-*/
-const IndexPage = () => {
+export default function Home() {
   return (
     <>
-      <div className="bg-gray-50">
-        <header className="py-4 bg-white shadow">
-          <h1 className="text-center text-4xl font-bold">CodeArena</h1>
-        </header>
-      </div>
-
+      <Navbar />
+      <Footer />
+      <card>
+      </card>
     </>
   );
-};
+}
 
-export default IndexPage;
