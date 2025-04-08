@@ -1,4 +1,4 @@
-# CodeArena
+a# CodeArena
 A fast, scalable platform for solving coding challenges with multi-language support and secure Docker-based execution(possible migration to Firecracker VM??), built in Rust, NodeJs
 
 ## Tasks:
@@ -77,7 +77,7 @@ sequenceDiagram
         ProblemService-->>APIGateway: Returns problem list
         APIGateway-->>Frontend: Returns problem list
         User->>Frontend: Selects problem
-        Frontend->>APIGateway: GET /problems/:id (with JWT)
+        Frontend->>APIGateway: GET /problem/:id (with JWT)
         APIGateway->>ProblemService: Forward request
         ProblemService-->>APIGateway: Returns problem details
         APIGateway-->>Frontend: Returns problem details
